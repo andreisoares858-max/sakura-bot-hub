@@ -1,29 +1,103 @@
 import { useState } from "react";
 
-const categories: Record<string, string[]> = {
+interface Command {
+  name: string;
+  desc: string;
+}
+
+const categories: Record<string, Command[]> = {
   "🎮 Fun": [
-    "2048", "8ball", "advice", "ascii", "compliment", "connectfour", "darkjoke",
-    "fact", "fliptext", "guess", "hangman", "hug", "image", "kill", "kiss",
-    "lennyface", "meme", "pickupline", "quote", "rizz", "roast", "rps",
-    "say", "slap", "tictactoe", "wordle",
+    { name: "2048", desc: "Jogue o clássico 2048" },
+    { name: "8ball", desc: "Pergunte à bola mágica" },
+    { name: "advice", desc: "Receba um conselho" },
+    { name: "ascii", desc: "Texto em arte ASCII" },
+    { name: "compliment", desc: "Elogie alguém" },
+    { name: "connectfour", desc: "Jogue Connect Four" },
+    { name: "darkjoke", desc: "Piada de humor negro" },
+    { name: "fact", desc: "Fato aleatório" },
+    { name: "fliptext", desc: "Inverta seu texto" },
+    { name: "guess", desc: "Adivinhe o número" },
+    { name: "hangman", desc: "Jogue forca" },
+    { name: "hug", desc: "Abrace alguém" },
+    { name: "image", desc: "Busque uma imagem" },
+    { name: "kill", desc: "Elimine alguém (fictício)" },
+    { name: "kiss", desc: "Beije alguém" },
+    { name: "lennyface", desc: "( ͡° ͜ʖ ͡°)" },
+    { name: "meme", desc: "Meme aleatório" },
+    { name: "pickupline", desc: "Cantada aleatória" },
+    { name: "quote", desc: "Citação inspiradora" },
+    { name: "rizz", desc: "Teste seu charme" },
+    { name: "roast", desc: "Zoeira com alguém" },
+    { name: "rps", desc: "Pedra, papel, tesoura" },
+    { name: "say", desc: "Bot repete sua msg" },
+    { name: "slap", desc: "Dê um tapa em alguém" },
+    { name: "tictactoe", desc: "Jogo da velha" },
+    { name: "wordle", desc: "Jogue Wordle" },
   ],
   "💰 Economy": [
-    "balance", "beg", "blackjack", "booster", "coinflip", "crime", "daily",
-    "deposit", "economy", "fishing", "heist", "inventory", "rob", "roll",
-    "roulette", "slot", "store", "transfer", "withdraw", "work",
+    { name: "balance", desc: "Veja seu saldo" },
+    { name: "beg", desc: "Peça dinheiro" },
+    { name: "blackjack", desc: "Jogue 21" },
+    { name: "booster", desc: "Ative um booster" },
+    { name: "coinflip", desc: "Cara ou coroa" },
+    { name: "crime", desc: "Cometa um crime" },
+    { name: "daily", desc: "Recompensa diária" },
+    { name: "deposit", desc: "Deposite no banco" },
+    { name: "economy", desc: "Painel de economia" },
+    { name: "fishing", desc: "Pesque peixes" },
+    { name: "heist", desc: "Assalto em grupo" },
+    { name: "inventory", desc: "Seu inventário" },
+    { name: "rob", desc: "Roube alguém" },
+    { name: "roll", desc: "Role os dados" },
+    { name: "roulette", desc: "Roleta russa" },
+    { name: "slot", desc: "Caça-níquel" },
+    { name: "store", desc: "Loja de itens" },
+    { name: "transfer", desc: "Transfira dinheiro" },
+    { name: "withdraw", desc: "Saque do banco" },
+    { name: "work", desc: "Trabalhe por moedas" },
   ],
   "📋 General": [
-    "botavatar", "botinfo", "eventos", "giveaway", "help", "ping",
-    "reminder", "serverinfo", "snipe", "suggest", "suggestapp", "testwelcome", "user",
+    { name: "botavatar", desc: "Avatar do bot" },
+    { name: "botinfo", desc: "Info do bot" },
+    { name: "eventos", desc: "Eventos ativos" },
+    { name: "giveaway", desc: "Crie sorteios" },
+    { name: "help", desc: "Lista de comandos" },
+    { name: "ping", desc: "Latência do bot" },
+    { name: "reminder", desc: "Crie lembretes" },
+    { name: "serverinfo", desc: "Info do servidor" },
+    { name: "snipe", desc: "Msg deletada" },
+    { name: "suggest", desc: "Faça sugestões" },
+    { name: "suggestapp", desc: "Sugestão de app" },
+    { name: "testwelcome", desc: "Teste boas-vindas" },
+    { name: "user", desc: "Info de usuário" },
   ],
   "⚔️ Moderation": [
-    "antihoist", "apelo", "moderation", "poll", "removerole", "report", "role",
+    { name: "antihoist", desc: "Anti caracteres no nick" },
+    { name: "apelo", desc: "Sistema de apelação" },
+    { name: "moderation", desc: "Painel de moderação" },
+    { name: "poll", desc: "Crie enquetes" },
+    { name: "removerole", desc: "Remova um cargo" },
+    { name: "report", desc: "Denuncie um usuário" },
+    { name: "role", desc: "Gerencie cargos" },
   ],
   "🔧 Utility": [
-    "autoReact", "autoResponse", "backup", "BotActivity", "channelstats",
-    "embed", "steal", "translate", "inviter", "invites", "tickets",
+    { name: "autoReact", desc: "Reação automática" },
+    { name: "autoResponse", desc: "Resposta automática" },
+    { name: "backup", desc: "Backup do servidor" },
+    { name: "BotActivity", desc: "Status do bot" },
+    { name: "channelstats", desc: "Stats do canal" },
+    { name: "embed", desc: "Crie embeds" },
+    { name: "steal", desc: "Roube emojis" },
+    { name: "translate", desc: "Traduza textos" },
+    { name: "inviter", desc: "Quem convidou" },
+    { name: "invites", desc: "Seus convites" },
+    { name: "tickets", desc: "Sistema de tickets" },
   ],
-  "📈 Leveling": ["leaderboard", "level", "rank"],
+  "📈 Leveling": [
+    { name: "leaderboard", desc: "Ranking do servidor" },
+    { name: "level", desc: "Veja seu nível" },
+    { name: "rank", desc: "Seu rank card" },
+  ],
 };
 
 const CommandsSection = () => {
@@ -59,15 +133,18 @@ const CommandsSection = () => {
         </div>
 
         {/* Commands grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {categories[active].map((cmd) => (
             <div
-              key={cmd}
-              className="bg-gradient-card border border-border rounded-lg px-4 py-3 text-center hover:border-primary/40 transition-all duration-200 group"
+              key={cmd.name}
+              className="bg-gradient-card border border-border rounded-lg px-4 py-4 hover:border-primary/40 transition-all duration-200 group"
             >
-              <code className="text-sm text-muted-foreground group-hover:text-primary transition-colors">
-                /{cmd}
+              <code className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                /{cmd.name}
               </code>
+              <p className="text-xs text-muted-foreground mt-1 leading-snug">
+                {cmd.desc}
+              </p>
             </div>
           ))}
         </div>
