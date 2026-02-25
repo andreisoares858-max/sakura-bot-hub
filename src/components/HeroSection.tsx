@@ -47,7 +47,7 @@ const HeroSection = () => {
         </h1>
 
         <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-          Um bot completo para Discord com <span className="text-primary font-medium">81+ comandos</span>, economia, diversão, moderação, leveling e muito mais.
+          Transforme seu servidor com <span className="text-primary font-medium">81+ comandos</span> poderosos — de economia e jogos a moderação avançada e IA. Tudo em um único bot, leve e personalizável.
         </p>
 
         {/* CTA */}
