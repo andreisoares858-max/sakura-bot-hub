@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import EditableText from "@/components/EditableText";
+import { useSiteContent, useUpdateSiteContent } from "@/hooks/useSiteContent";
 
 const iconMap = { Shield, TrendingUp, Ticket, Heart };
 
@@ -13,16 +15,25 @@ const categoryKeys = Object.keys(categories) as (keyof typeof categories)[];
 const CategoryContent = ({ category }: { category: keyof typeof categories }) => {
   const cmds = commands.filter((c) => c.category === category);
   const cat = categories[category];
+  const { data: content } = useSiteContent("docs", `category-${category}`);
+  const updateContent = useUpdateSiteContent();
+
+  const desc = (content as any)?.description || {
+    moderation: "Ferramentas para manter seu servidor seguro e organizado.",
+    economy: "Sistema completo de XP, níveis, moedas e loja.",
+    tickets: "Gerencie suporte com tickets organizados.",
+    welcome: "Configure mensagens automáticas e autorole.",
+  }[category];
 
   return (
     <div>
       <h2 className="text-2xl font-bold mb-2">{cat.label}</h2>
-      <p className="text-muted-foreground mb-8 text-sm">
-        {category === "moderation" && "Ferramentas para manter seu servidor seguro e organizado."}
-        {category === "economy" && "Sistema completo de XP, níveis, moedas e loja."}
-        {category === "tickets" && "Gerencie suporte com tickets organizados."}
-        {category === "welcome" && "Configure mensagens automáticas e autorole."}
-      </p>
+      <EditableText
+        value={desc}
+        onSave={(v) => updateContent.mutate({ page: "docs", sectionKey: `category-${category}`, content: { description: v } })}
+        as="p"
+        className="text-muted-foreground mb-8 text-sm"
+      />
       <div className="space-y-4">
         {cmds.map((cmd) => (
           <CommandBlock key={cmd.name} cmd={cmd} />
@@ -77,14 +88,20 @@ const SidebarNav = ({ active, onSelect }: { active: string; onSelect: (k: string
 const Docs = () => {
   const [active, setActive] = useState<string>("moderation");
   const isMobile = useIsMobile();
+  const { data: headerContent } = useSiteContent("docs", "header");
+  const updateContent = useUpdateSiteContent();
+
+  const header = (headerContent as any) || { title: "Documentação" };
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">
-        <span className="sakura-text-gradient">Documentação</span>
-      </h1>
+      <EditableText
+        value={header.title}
+        onSave={(v) => updateContent.mutate({ page: "docs", sectionKey: "header", content: { title: v } })}
+        as="h1"
+        className="text-3xl font-bold mb-8 sakura-text-gradient"
+      />
       <div className="flex gap-8">
-        {/* Desktop Sidebar */}
         {!isMobile && (
           <aside className="w-64 shrink-0">
             <div className="sticky top-24 p-4 rounded-xl bg-card sakura-border-glow">
@@ -93,7 +110,6 @@ const Docs = () => {
           </aside>
         )}
 
-        {/* Mobile Sidebar */}
         {isMobile && (
           <Sheet>
             <SheetTrigger asChild>
@@ -110,7 +126,6 @@ const Docs = () => {
           </Sheet>
         )}
 
-        {/* Content */}
         <div className="flex-1 min-w-0">
           <CategoryContent category={active as keyof typeof categories} />
         </div>
