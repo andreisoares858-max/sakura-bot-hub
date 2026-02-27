@@ -48,9 +48,9 @@ const Index = () => (
                 Comprar no BuiltByBit <ExternalLink className="ml-2 h-4 w-4" />
               </a>
             </Button>
-            <Button size="lg" variant="ghost" asChild>
+            <Button size="lg" variant="outline" className="border-muted-foreground/30 hover:bg-accent/10 hover:border-primary/50" asChild>
               <a href="https://discord.gg/N8TGxZvAN3" target="_blank" rel="noopener noreferrer">
-                Discord de Suporte
+                <ExternalLink className="mr-2 h-4 w-4" /> Discord de Suporte
               </a>
             </Button>
           </div>
