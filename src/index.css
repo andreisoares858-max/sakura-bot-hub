@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,49 +6,49 @@
 
 @layer base {
   :root {
-    --background: 232 40% 8%;
-    --foreground: 330 30% 95%;
+    --background: 270 15% 6%;
+    --foreground: 300 10% 92%;
 
-    --card: 232 35% 12%;
-    --card-foreground: 330 30% 95%;
+    --card: 270 15% 9%;
+    --card-foreground: 300 10% 92%;
 
-    --popover: 232 35% 12%;
-    --popover-foreground: 330 30% 95%;
+    --popover: 270 15% 9%;
+    --popover-foreground: 300 10% 92%;
 
     --primary: 330 80% 65%;
-    --primary-foreground: 232 40% 8%;
+    --primary-foreground: 270 15% 6%;
 
-    --secondary: 280 40% 20%;
-    --secondary-foreground: 330 30% 95%;
+    --secondary: 270 15% 14%;
+    --secondary-foreground: 300 10% 92%;
 
-    --muted: 232 30% 16%;
-    --muted-foreground: 330 10% 60%;
+    --muted: 270 10% 16%;
+    --muted-foreground: 270 10% 55%;
 
     --accent: 330 60% 50%;
-    --accent-foreground: 330 30% 95%;
+    --accent-foreground: 300 10% 95%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 280 20% 20%;
-    --input: 280 20% 20%;
+    --border: 270 15% 18%;
+    --input: 270 15% 18%;
     --ring: 330 80% 65%;
 
     --radius: 0.75rem;
 
-    --sakura-glow: 330 80% 65%;
-    --sakura-soft: 330 60% 80%;
-    --sakura-deep: 330 70% 45%;
-    --navy: 232 40% 8%;
-    --navy-light: 232 35% 14%;
+    --sakura: 330 80% 65%;
+    --sakura-light: 330 90% 80%;
+    --sakura-dark: 330 70% 45%;
+    --sakura-glow: 330 100% 70%;
+    --magenta: 300 70% 55%;
 
-    --sidebar-background: 232 35% 10%;
-    --sidebar-foreground: 330 30% 95%;
+    --sidebar-background: 270 15% 8%;
+    --sidebar-foreground: 300 10% 85%;
     --sidebar-primary: 330 80% 65%;
-    --sidebar-primary-foreground: 232 40% 8%;
-    --sidebar-accent: 280 40% 20%;
-    --sidebar-accent-foreground: 330 30% 95%;
-    --sidebar-border: 280 20% 20%;
+    --sidebar-primary-foreground: 270 15% 6%;
+    --sidebar-accent: 270 15% 14%;
+    --sidebar-accent-foreground: 300 10% 92%;
+    --sidebar-border: 270 15% 16%;
     --sidebar-ring: 330 80% 65%;
   }
 }
@@ -59,52 +59,39 @@
   }
 
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Outfit', sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
+  code, pre {
+    font-family: 'JetBrains Mono', monospace;
   }
 }
 
 @layer utilities {
-  .text-gradient-sakura {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(330 80% 65%), hsl(300 60% 70%), hsl(330 90% 80%));
+  .sakura-gradient {
+    background: linear-gradient(135deg, hsl(330 80% 65%), hsl(300 70% 55%));
   }
 
-  .bg-gradient-sakura {
-    background: linear-gradient(135deg, hsl(330 80% 65%), hsl(300 50% 55%));
+  .sakura-text-gradient {
+    background: linear-gradient(135deg, hsl(330 90% 80%), hsl(330 80% 65%), hsl(300 70% 55%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .bg-gradient-card {
-    background: linear-gradient(145deg, hsl(232 35% 14%), hsl(260 30% 12%));
+  .sakura-glow {
+    box-shadow: 0 0 30px hsl(330 80% 65% / 0.2), 0 0 60px hsl(330 80% 65% / 0.1);
   }
 
-  .shadow-sakura {
-    box-shadow: 0 0 30px -5px hsl(330 80% 65% / 0.3);
+  .sakura-border-glow {
+    border: 1px solid hsl(330 80% 65% / 0.3);
+    box-shadow: inset 0 0 20px hsl(330 80% 65% / 0.05);
   }
 
-  .shadow-sakura-lg {
-    box-shadow: 0 0 60px -10px hsl(330 80% 65% / 0.4);
+  .glass {
+    background: hsl(270 15% 9% / 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(270 15% 18% / 0.5);
   }
-
-  .glow-sakura {
-    filter: drop-shadow(0 0 12px hsl(330 80% 65% / 0.5));
-  }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes petal-fall {
-  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
 }
