@@ -20,7 +20,7 @@ const AdminLogin = () => {
   // Redirect if already logged in
   useEffect(() => {
     if (!authLoading && user) {
-      navigate("/", { replace: true });
+      navigate("/admin", { replace: true });
     }
   }, [user, authLoading, navigate]);
 
@@ -38,7 +38,7 @@ const AdminLogin = () => {
       });
     } else {
       toast({ title: "Login realizado com sucesso!" });
-      navigate("/");
+      navigate("/admin");
     }
     setLoading(false);
   };

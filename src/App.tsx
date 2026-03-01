@@ -14,6 +14,7 @@ import Commands from "./pages/Commands";
 import Changelog from "./pages/Changelog";
 import Faq from "./pages/Faq";
 import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
                 <Route path="/changelog" element={<Changelog />} />
                 <Route path="/faq" element={<Faq />} />
                 <Route path="/admin-login" element={<AdminLogin />} />
+                <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>
