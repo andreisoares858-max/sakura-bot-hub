@@ -4,8 +4,7 @@ import { commands, categories } from "@/data/commands";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import EditableText from "@/components/EditableText";
-import { useSiteContent, useUpdateSiteContent } from "@/hooks/useSiteContent";
+import { useSiteContent } from "@/hooks/useSiteContent";
 
 const categoryKeys = ["all", ...Object.keys(categories)] as const;
 
@@ -13,7 +12,6 @@ const Commands = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
   const { data: headerContent } = useSiteContent("commands", "header");
-  const updateContent = useUpdateSiteContent();
 
   const header = (headerContent as any) || { title: "Comandos", subtitle: `Todos os ${commands.length} comandos do Sakura Bot.` };
 
@@ -27,8 +25,8 @@ const Commands = () => {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <EditableText value={header.title} onSave={(v) => updateContent.mutate({ page: "commands", sectionKey: "header", content: { ...header, title: v } })} as="h1" className="text-3xl font-bold mb-2 sakura-text-gradient" />
-      <EditableText value={header.subtitle} onSave={(v) => updateContent.mutate({ page: "commands", sectionKey: "header", content: { ...header, subtitle: v } })} as="p" className="text-muted-foreground mb-8" />
+      <h1 className="text-3xl font-bold mb-2 sakura-text-gradient">{header.title}</h1>
+      <p className="text-muted-foreground mb-8">{header.subtitle}</p>
 
       <div className="flex flex-col sm:flex-row gap-4 mb-8">
         <div className="relative flex-1">

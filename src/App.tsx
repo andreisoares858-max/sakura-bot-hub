@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
-import { EditModeProvider } from "./components/AdminToolbar";
 import Layout from "./components/Layout";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminToolbar from "./components/AdminToolbar";
@@ -22,8 +21,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <EditModeProvider>
-        <TooltipProvider>
+      <TooltipProvider>
           <Toaster />
           <Sonner />
           <BrowserRouter>
@@ -43,7 +41,6 @@ const App = () => (
             <AdminToolbar />
           </BrowserRouter>
         </TooltipProvider>
-      </EditModeProvider>
     </AuthProvider>
   </QueryClientProvider>
 );
