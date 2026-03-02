@@ -1,19 +1,13 @@
 import { Cherry } from "lucide-react";
 import { Link } from "react-router-dom";
-import EditableText from "@/components/EditableText";
-import { useSiteContent, useUpdateSiteContent } from "@/hooks/useSiteContent";
+import { useSiteContent } from "@/hooks/useSiteContent";
 
 const Footer = () => {
   const { data: footerContent } = useSiteContent("global", "footer");
-  const updateContent = useUpdateSiteContent();
 
   const footer = (footerContent as any) || {
     description: "O bot de comunidade completo para o seu servidor Discord.",
     copyright: "© 2025 Sakura Bot. Todos os direitos reservados.",
-  };
-
-  const saveFooter = (field: string, value: string) => {
-    updateContent.mutate({ page: "global", sectionKey: "footer", content: { ...footer, [field]: value } });
   };
 
   return (
@@ -25,7 +19,7 @@ const Footer = () => {
               <Cherry className="h-5 w-5 text-primary" />
               <span className="font-bold sakura-text-gradient">Sakura Bot</span>
             </div>
-            <EditableText value={footer.description} onSave={(v) => saveFooter("description", v)} as="p" className="text-sm text-muted-foreground" />
+            <p className="text-sm text-muted-foreground">{footer.description}</p>
           </div>
           <div>
             <h4 className="font-semibold mb-3 text-sm">Links</h4>
@@ -45,7 +39,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="border-t border-border mt-8 pt-6 text-center">
-          <EditableText value={footer.copyright} onSave={(v) => saveFooter("copyright", v)} as="span" className="text-xs text-muted-foreground" />
+          <span className="text-xs text-muted-foreground">{footer.copyright}</span>
         </div>
       </div>
     </footer>

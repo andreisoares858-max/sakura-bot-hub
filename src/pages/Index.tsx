@@ -2,8 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Cherry, Shield, TrendingUp, Ticket, Heart, ExternalLink, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import EditableText from "@/components/EditableText";
-import { useSiteContent, useUpdateSiteContent } from "@/hooks/useSiteContent";
+import { useSiteContent } from "@/hooks/useSiteContent";
 
 const defaultFeatures = [
   { icon: Shield, title: "Moderação", desc: "Ban, kick, mute, warn e logs completos para manter seu servidor seguro.", color: "text-red-400" },
@@ -21,7 +20,6 @@ const stats = [
 const Index = () => {
   const { data: heroContent } = useSiteContent("index", "hero");
   const { data: featuresContent } = useSiteContent("index", "features");
-  const updateContent = useUpdateSiteContent();
 
   const hero = (heroContent as any) || {
     badge: "Bot de Comunidade para Discord",
@@ -33,24 +31,6 @@ const Index = () => {
   const features = (featuresContent as any)?.items || defaultFeatures.map(f => ({ title: f.title, desc: f.desc }));
   const featureIcons = [Shield, TrendingUp, Ticket, Heart];
   const featureColors = ["text-red-400", "text-yellow-400", "text-blue-400", "text-primary"];
-
-  const saveHero = (field: string, value: string) => {
-    updateContent.mutate({
-      page: "index",
-      sectionKey: "hero",
-      content: { ...hero, [field]: value },
-    });
-  };
-
-  const saveFeature = (index: number, field: string, value: string) => {
-    const updated = [...features];
-    updated[index] = { ...updated[index], [field]: value };
-    updateContent.mutate({
-      page: "index",
-      sectionKey: "features",
-      content: { items: updated },
-    });
-  };
 
   return (
     <div>
@@ -64,27 +44,11 @@ const Index = () => {
           >
             <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full sakura-border-glow bg-card/50">
               <Cherry className="h-5 w-5 text-primary" />
-              <EditableText
-                value={hero.badge}
-                onSave={(v) => saveHero("badge", v)}
-                as="span"
-                className="text-sm font-medium text-muted-foreground"
-              />
+              <span className="text-sm font-medium text-muted-foreground">{hero.badge}</span>
             </div>
 
-            <EditableText
-              value={hero.title}
-              onSave={(v) => saveHero("title", v)}
-              as="h1"
-              className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight sakura-text-gradient"
-            />
-
-            <EditableText
-              value={hero.subtitle}
-              onSave={(v) => saveHero("subtitle", v)}
-              as="p"
-              className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
-            />
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight sakura-text-gradient">{hero.title}</h1>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">{hero.subtitle}</p>
 
             <div className="flex flex-wrap justify-center gap-4">
               <Button size="lg" className="sakura-gradient text-primary-foreground font-semibold px-8" asChild>
@@ -103,7 +67,6 @@ const Index = () => {
             </div>
           </motion.div>
 
-          {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -118,20 +81,13 @@ const Index = () => {
             ))}
           </motion.div>
         </div>
-
-        {/* Background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
       </section>
 
       {/* Features */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <EditableText
-            value={hero.featuresHeading}
-            onSave={(v) => saveHero("featuresHeading", v)}
-            as="h2"
-            className="text-3xl font-bold text-center mb-12"
-          />
+          <h2 className="text-3xl font-bold text-center mb-12">{hero.featuresHeading}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((f: any, i: number) => {
               const Icon = featureIcons[i] || Shield;
@@ -146,18 +102,8 @@ const Index = () => {
                   className="p-6 rounded-xl bg-card sakura-border-glow hover:bg-card/80 transition-colors group"
                 >
                   <Icon className={`h-10 w-10 mb-4 ${color} group-hover:scale-110 transition-transform`} />
-                  <EditableText
-                    value={f.title}
-                    onSave={(v) => saveFeature(i, "title", v)}
-                    as="h3"
-                    className="text-lg font-semibold mb-2"
-                  />
-                  <EditableText
-                    value={f.desc}
-                    onSave={(v) => saveFeature(i, "desc", v)}
-                    as="p"
-                    className="text-sm text-muted-foreground leading-relaxed"
-                  />
+                  <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
                 </motion.div>
               );
             })}
